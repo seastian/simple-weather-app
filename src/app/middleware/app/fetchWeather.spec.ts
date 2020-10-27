@@ -1,5 +1,5 @@
-import { addCityById } from "app/actions/cities";
-import { API_START } from "app/constants/actions";
+import { addCity, fetchCityCurrentWeather } from "app/actions/cities";
+import { API_START, FETCH_CURRENT_WEATHER } from "app/constants/actions";
 import { AppAction } from "app/types/AppAction";
 import { fetchWeatherMdl } from "./fetchWeather";
 
@@ -22,7 +22,19 @@ describe("fetchWeather middleware", () => {
 
     const mdl = fetchWeatherMdl({ dispatch, getState })(next);
 
-    mdl(addCityById("buenos aires"));
+    mdl(addCity("Buenos Aires", 34, 34));
+
+    expect(dispatch.mock.calls[0][0].type).toBe(FETCH_CURRENT_WEATHER);
+  });
+
+  it("should dispatch an api action", () => {
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+    const next = jest.fn();
+
+    const mdl = fetchWeatherMdl({ dispatch, getState })(next);
+
+    mdl(fetchCityCurrentWeather("[2,2]"));
 
     expect(dispatch.mock.calls[0][0].type).toBe(API_START);
   });

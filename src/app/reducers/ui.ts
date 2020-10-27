@@ -1,4 +1,4 @@
-import { UI_REQUEST_END, UI_REQUEST_START } from "app/constants/actions";
+import { API_START, API_END } from "app/constants/actions";
 import { AppAction } from "app/types/AppAction";
 
 interface UiState {
@@ -11,10 +11,10 @@ const initialState: UiState = {
 
 export const uiReducer = (state = initialState, action: AppAction): UiState => {
   switch (action.type) {
-    case UI_REQUEST_START:
+    case API_START:
       return { ...state, requests: state.requests + 1 };
 
-    case UI_REQUEST_END:
+    case API_END:
       return { ...state, requests: state.requests - 1 };
 
     default:

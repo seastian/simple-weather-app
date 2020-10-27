@@ -1,69 +1,98 @@
 import {
   ADD_CITY,
-  SET_CITY,
-  FETCH_CITY_SUCCESS,
-  FETCH_CITY_PENDING,
-  FETCH_CITY_ERROR,
+  SET_CURRENT_WEATHER,
+  FETCH_CURRENT_WEATHER,
+  FETCH_CURRENT_WEATHER_PENDING,
+  FETCH_CURRENT_WEATHER_SUCCESS,
+  FETCH_CURRENT_WEATHER_ERROR,
 } from "app/constants/actions";
 import { City } from "app/types/City";
 import { OpCurrentWeather } from "app/types/op/Current";
+import { Weather } from "app/types/Weather";
 
 export interface AddCity {
   type: typeof ADD_CITY;
-  id: string;
-}
-
-export const addCityById = (id: string): AddCity => ({
-  type: ADD_CITY,
-  id,
-});
-
-export interface SetCity {
-  type: typeof SET_CITY;
   city: City;
 }
 
-export const setCity = (city: City): SetCity => ({
-  type: SET_CITY,
-  city,
+export const addCity = (name: string, lat: number, lng: number): AddCity => ({
+  type: ADD_CITY,
+  city: { id: `${lat},${lng}`, name, lat, lng },
 });
 
-interface FetchCityPending {
-  type: typeof FETCH_CITY_PENDING;
+export interface SetCityCurrentWeather {
+  type: typeof SET_CURRENT_WEATHER;
+  payload: {
+    cityId: string;
+    weather: Weather;
+  };
+}
+
+export const setCityCurrentWeather = (
+  cityId: string,
+  weather: Weather
+): SetCityCurrentWeather => ({
+  type: SET_CURRENT_WEATHER,
+  payload: {
+    cityId,
+    weather,
+  },
+});
+
+interface FetchCityCurrentWeather {
+  type: typeof FETCH_CURRENT_WEATHER;
+  cityId: string;
+}
+
+export const fetchCityCurrentWeather = (
+  cityId: string
+): FetchCityCurrentWeather => ({
+  type: FETCH_CURRENT_WEATHER,
+  cityId,
+});
+
+interface FetchCityCurrentWeatherPending {
+  type: typeof FETCH_CURRENT_WEATHER_PENDING;
   id: string;
 }
 
-export const fetchCityPending = (id: string): FetchCityPending => ({
-  type: FETCH_CITY_PENDING,
+export const fetchCityCurrentWeatherPending = (
+  id: string
+): FetchCityCurrentWeatherPending => ({
+  type: FETCH_CURRENT_WEATHER_PENDING,
   id,
 });
 
-interface FetchCitySuccess {
-  type: typeof FETCH_CITY_SUCCESS;
-  id: string;
+interface FetchCityCurrentWeatherSuccess {
+  type: typeof FETCH_CURRENT_WEATHER_SUCCESS;
+  cityId: string;
   payload: {
     data?: OpCurrentWeather;
   };
 }
-export const fetchCitySuccess = (id: string): FetchCitySuccess => ({
-  type: FETCH_CITY_SUCCESS,
-  id,
+export const fetchCityCurrentWeatherSuccess = (
+  cityId: string
+): FetchCityCurrentWeatherSuccess => ({
+  type: FETCH_CURRENT_WEATHER_SUCCESS,
+  cityId,
   payload: {
     data: undefined,
   },
 });
 
-interface FetchCityError {
-  type: typeof FETCH_CITY_ERROR;
-  id: string;
+interface FetchCityCurrentWeatherError {
+  type: typeof FETCH_CURRENT_WEATHER_ERROR;
+  cityId: string;
   payload: {
     data: any;
   };
 }
 
-export const fetchCityError = (id: string): FetchCityError => ({
-  type: FETCH_CITY_ERROR,
-  id: id,
+export const fetchCityCurrentWeatherError = (
+  cityId: string
+): FetchCityCurrentWeatherError => ({
+  type: FETCH_CURRENT_WEATHER_ERROR,
+  cityId,
   payload: {
     data: undefined,
   },
@@ -71,7 +100,8 @@ export const fetchCityError = (id: string): FetchCityError => ({
 
 export type CityActions =
   | AddCity
-  | SetCity
-  | FetchCitySuccess
-  | FetchCityPending
-  | FetchCityError;
+  | SetCityCurrentWeather
+  | FetchCityCurrentWeather
+  | FetchCityCurrentWeatherPending
+  | FetchCityCurrentWeatherSuccess
+  | FetchCityCurrentWeatherError;

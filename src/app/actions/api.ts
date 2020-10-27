@@ -1,9 +1,4 @@
-import {
-  API_START,
-  API_PENDING,
-  API_ERROR,
-  API_DONE,
-} from "app/constants/actions";
+import { API_END, API_START } from "app/constants/actions";
 import { AppAction, ActionConstant } from "app/types/AppAction";
 
 type method = "GET" | "POST";
@@ -27,21 +22,6 @@ export interface ApiStart {
   };
 }
 
-export interface ApiPending {
-  type: typeof API_PENDING;
-}
-
-export interface ApiDone {
-  type: typeof API_DONE;
-  payload: {
-    data: any;
-  };
-}
-
-export interface ApiError {
-  type: typeof API_ERROR;
-  error: string;
-}
 const get: (
   url: string,
   pending: AppAction,
@@ -56,9 +36,10 @@ export const api = {
   get,
 };
 
-export const makeError: (err: string) => ApiError = (err) => ({
-  type: API_ERROR,
-  error: err,
-});
+export interface ApiEnd {
+  type: typeof API_END;
+}
 
-export type ApiActions = ApiStart | ApiPending | ApiError;
+export const apiEnd = (): ApiEnd => ({ type: API_END });
+
+export type ApiActions = ApiStart | ApiEnd;

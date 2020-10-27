@@ -1,13 +1,18 @@
-import { ADD_CITY, FETCH_CITY_SUCCESS } from "app/constants/actions";
+import {
+  ADD_CITY,
+  FETCH_CURRENT_WEATHER,
+  FETCH_CURRENT_WEATHER_SUCCESS,
+} from "app/constants/actions";
 import { Middleware } from "../Middleware";
 import { api } from "app/actions/api";
 import {
-  setCity,
-  fetchCityPending,
-  fetchCitySuccess,
-  fetchCityError,
+  fetchCityCurrentWeather,
+  fetchCityCurrentWeatherPending,
+  fetchCityCurrentWeatherSuccess,
+  fetchCityCurrentWeatherError,
+  setCityCurrentWeather,
 } from "app/actions/cities";
-import { City } from "app/types/City";
+import { Weather } from "app/types/Weather";
 
 export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
   action
@@ -15,19 +20,27 @@ export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
   next(action);
 
   if (action.type === ADD_CITY) {
-    const id = action.id;
-    const pending = fetchCityPending(id);
-    const success = fetchCitySuccess(id);
-    const error = fetchCityError(id);
-
-    dispatch(api.get(`/weather?q=${id}`, pending, success, error));
+    dispatch(fetchCityCurrentWeather(action.city.id));
   }
 
-  if (action.type === FETCH_CITY_SUCCESS) {
-    const city: City = {
-      id: action.id,
-      name: action.payload.data?.name,
-    };
-    dispatch(setCity(city));
+  if (action.type === FETCH_CURRENT_WEATHER) {
+    const { cityId } = action;
+    const pending = fetchCityCurrentWeatherPending(cityId);
+    const success = fetchCityCurrentWeatherSuccess(cityId);
+    const error = fetchCityCurrentWeatherError(cityId);
+
+    const [lat, lon] = cityId.split(",");
+    dispatch(
+      api.get(`/weather?lat=${lat}&lon=${lon}`, pending, success, error)
+    );
+  }
+
+  if (action.type === FETCH_CURRENT_WEATHER_SUCCESS) {
+    const {
+      cityId,
+      payload: { data },
+    } = action;
+    const weather: Weather = { temperature: data!.main.temp };
+    dispatch(setCityCurrentWeather(cityId, weather));
   }
 };
