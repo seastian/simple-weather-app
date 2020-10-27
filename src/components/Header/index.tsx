@@ -5,7 +5,9 @@ import {
   Toolbar,
   Typography,
   makeStyles,
+  IconButton,
 } from "@material-ui/core";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -26,7 +28,9 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}>
             Weather
           </Typography>
-          <Button color="inherit">Refresh</Button>
+          <IconButton color="inherit">
+            <RefreshIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>
