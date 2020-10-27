@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    position: "absolute",
+    position: "fixed",
     right: theme.spacing(3),
     bottom: theme.spacing(3),
   },

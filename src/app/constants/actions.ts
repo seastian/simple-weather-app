@@ -20,3 +20,5 @@ export const UPDATE_ALL_WEATHER = "UPDATE_ALL_WEATHER";
 // Toasts
 export const CREATE_TOAST = "CREATE_TOAST";
 export const DELETE_LAST_TOAST = "DELETE_LAST_TOAST";
+
+export const TOGGLE_THEME = "TOGGLE_THEME";

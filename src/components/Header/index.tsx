@@ -8,10 +8,12 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import ToggleIcon from "@material-ui/icons/Brightness4";
 import { connect } from "react-redux";
 import { getIsLoading } from "app/selectors/ui";
 import { AppState } from "app/types/AppState";
 import { updateAllWeather } from "app/actions/cities";
+import { toggleTheme } from "app/actions/ui";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,9 +27,10 @@ const useStyles = makeStyles(() => ({
 interface Props {
   isLoading: boolean;
   updateAllWeather: typeof updateAllWeather;
+  toggleTheme: typeof toggleTheme;
 }
 
-const Header = ({ isLoading, updateAllWeather }: Props) => {
+const Header = ({ isLoading, updateAllWeather, toggleTheme }: Props) => {
   const classes = useStyles();
 
   return (
@@ -37,6 +40,9 @@ const Header = ({ isLoading, updateAllWeather }: Props) => {
           <Typography variant="h6" className={classes.title}>
             Weather
           </Typography>
+          <IconButton color="inherit" onClick={toggleTheme}>
+            <ToggleIcon />
+          </IconButton>
           {isLoading ? (
             <CircularProgress color="secondary" />
           ) : (
@@ -54,6 +60,6 @@ const mapStateToProps = (state: AppState) => ({
   isLoading: getIsLoading(state),
 });
 
-const mapDispatchToProps = { updateAllWeather };
+const mapDispatchToProps = { updateAllWeather, toggleTheme };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

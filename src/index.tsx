@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === "development") {
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
     <Provider store={store}>
+      <CssBaseline />
       <App />
     </Provider>
   </React.StrictMode>,
