@@ -1,6 +1,7 @@
 import {
   ADD_CITY,
   FETCH_CURRENT_WEATHER,
+  FETCH_CURRENT_WEATHER_ERROR,
   FETCH_CURRENT_WEATHER_SUCCESS,
 } from "app/constants/actions";
 import { Middleware } from "../Middleware";
@@ -14,6 +15,7 @@ import {
 } from "app/actions/cities";
 import { Weather } from "app/types/Weather";
 import { getCityById } from "app/selectors/cities";
+import { createToast } from "app/actions/toasts";
 
 export const fetchWeatherMdl: Middleware = ({ dispatch, getState }) => (
   next
@@ -39,6 +41,10 @@ export const fetchWeatherMdl: Middleware = ({ dispatch, getState }) => (
         error
       )
     );
+  }
+
+  if (action.type === FETCH_CURRENT_WEATHER_ERROR) {
+    dispatch(createToast("Could not update weather"));
   }
 
   if (action.type === FETCH_CURRENT_WEATHER_SUCCESS) {

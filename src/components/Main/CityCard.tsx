@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2em",
     marginBottom: theme.spacing(1),
   },
+  center: {
+    textAlign: "center",
+  },
 }));
 
 interface Props {
@@ -50,12 +53,19 @@ const CityCard = ({ city, deleteCity }: Props) => {
               {city.currentWeather?.temperature}
             </div>
             <Grid container spacing={2} justify="center">
-              {city.forecast?.slice(1, 6).map((f, i) => (
-                <Grid item>
-                  <div>Today</div>
-                  <div>{f.temperature}</div>
-                </Grid>
-              ))}
+              {city.forecast?.slice(1, 6).map((f, i) => {
+                const date = new Date(
+                  +new Date() + (i + 1) * 24 * 60 * 60 * 1000
+                );
+
+                const day = date.toLocaleString("en-us", { weekday: "short" });
+                return (
+                  <Grid key={i} item>
+                    <div className={classes.center}>{day}</div>
+                    <div className={classes.center}>{f.temperature}</div>
+                  </Grid>
+                );
+              })}
             </Grid>
           </div>
         ) : (
