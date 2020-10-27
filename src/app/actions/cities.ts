@@ -6,6 +6,7 @@ import {
   FETCH_CURRENT_WEATHER_SUCCESS,
   FETCH_CURRENT_WEATHER_ERROR,
   DELETE_CITY,
+  UPDATE_ALL_WEATHER,
 } from "app/constants/actions";
 import { City } from "app/types/City";
 import { OpOneCall } from "app/types/op/types";
@@ -112,6 +113,14 @@ export const deleteCity = (cityId: string): DeleteCity => ({
   cityId,
 });
 
+interface UpdateAllWeather {
+  type: typeof UPDATE_ALL_WEATHER;
+}
+
+export const updateAllWeather = (): UpdateAllWeather => ({
+  type: UPDATE_ALL_WEATHER,
+});
+
 export type CityActions =
   | AddCity
   | SetCityCurrentWeather
@@ -119,4 +128,5 @@ export type CityActions =
   | FetchCityCurrentWeatherPending
   | FetchCityCurrentWeatherSuccess
   | FetchCityCurrentWeatherError
+  | UpdateAllWeather
   | DeleteCity;

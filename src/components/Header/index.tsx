@@ -5,8 +5,13 @@ import {
   Typography,
   makeStyles,
   IconButton,
+  CircularProgress,
 } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import { connect } from "react-redux";
+import { getIsLoading } from "app/selectors/ui";
+import { AppState } from "app/types/AppState";
+import { updateAllWeather } from "app/actions/cities";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +22,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const Header = () => {
+interface Props {
+  isLoading: boolean;
+  updateAllWeather: typeof updateAllWeather;
+}
+
+const Header = ({ isLoading, updateAllWeather }: Props) => {
   const classes = useStyles();
 
   return (
@@ -27,11 +37,23 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}>
             Weather
           </Typography>
-          <IconButton color="inherit">
-            <RefreshIcon />
-          </IconButton>
+          {isLoading ? (
+            <CircularProgress color="secondary" />
+          ) : (
+            <IconButton color="inherit" onClick={updateAllWeather}>
+              <RefreshIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
 };
+
+const mapStateToProps = (state: AppState) => ({
+  isLoading: getIsLoading(state),
+});
+
+const mapDispatchToProps = { updateAllWeather };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
