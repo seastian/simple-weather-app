@@ -6,5 +6,6 @@ export interface City {
   lat: number;
   lng: number;
   currentWeather?: Weather;
+  forecast?: Weather[];
   lastUpdate?: number;
 }

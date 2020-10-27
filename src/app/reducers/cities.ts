@@ -19,10 +19,10 @@ export const citiesReducer = (
     }
 
     case SET_CURRENT_WEATHER: {
-      const { cityId, weather } = action.payload;
+      const { cityId, weather, forecast } = action.payload;
       return {
         ...state,
-        [cityId]: { ...state[cityId], currentWeather: weather },
+        [cityId]: { ...state[cityId], currentWeather: weather, forecast },
       };
     }
 

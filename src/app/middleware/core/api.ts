@@ -19,7 +19,10 @@ export const apiMdl: Middleware = ({ dispatch }) => (next) => (action) => {
     };
 
     dispatch(pending);
-    fetch(encodeURI(API_URL + url), options)
+    fetch(
+      encodeURI(API_URL + url + "&appid=5d2145b1e3153ce2a87bbad571a98ba4"),
+      options
+    )
       .then((response) => response.json())
       .then((data) => {
         payload.success.payload.data = data;

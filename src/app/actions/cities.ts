@@ -7,7 +7,7 @@ import {
   FETCH_CURRENT_WEATHER_ERROR,
 } from "app/constants/actions";
 import { City } from "app/types/City";
-import { OpCurrentWeather } from "app/types/op/Current";
+import { OpOneCall } from "app/types/op/types";
 import { Weather } from "app/types/Weather";
 
 export interface AddCity {
@@ -25,17 +25,20 @@ export interface SetCityCurrentWeather {
   payload: {
     cityId: string;
     weather: Weather;
+    forecast: Weather[];
   };
 }
 
 export const setCityCurrentWeather = (
   cityId: string,
-  weather: Weather
+  weather: Weather,
+  forecast: Weather[]
 ): SetCityCurrentWeather => ({
   type: SET_CURRENT_WEATHER,
   payload: {
     cityId,
     weather,
+    forecast,
   },
 });
 
@@ -67,7 +70,7 @@ interface FetchCityCurrentWeatherSuccess {
   type: typeof FETCH_CURRENT_WEATHER_SUCCESS;
   cityId: string;
   payload: {
-    data?: OpCurrentWeather;
+    data?: OpOneCall;
   };
 }
 export const fetchCityCurrentWeatherSuccess = (

@@ -31,7 +31,12 @@ export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
 
     const [lat, lon] = cityId.split(",");
     dispatch(
-      api.get(`/weather?lat=${lat}&lon=${lon}`, pending, success, error)
+      api.get(
+        `/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`,
+        pending,
+        success,
+        error
+      )
     );
   }
 
@@ -40,7 +45,10 @@ export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
       cityId,
       payload: { data },
     } = action;
-    const weather: Weather = { temperature: data!.main.temp };
-    dispatch(setCityCurrentWeather(cityId, weather));
+    const weather: Weather = { temperature: data!.current.temp };
+    const forecast: Weather[] = data!.daily.map((f) => ({
+      temperature: f.temp.day,
+    }));
+    dispatch(setCityCurrentWeather(cityId, weather, forecast));
   }
 };

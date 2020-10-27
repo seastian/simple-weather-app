@@ -17,3 +17,22 @@ export interface OpCurrentWeather {
   name: string;
   dt: number;
 }
+
+export interface OpForecastWeather {
+  list: OpCurrentWeather[];
+}
+
+interface Daily {
+  temp: {
+    day: number;
+    min: number;
+    max: number;
+  };
+}
+
+export interface OpOneCall {
+  current: {
+    temp: number;
+  };
+  daily: Daily[];
+}
