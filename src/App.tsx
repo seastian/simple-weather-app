@@ -4,6 +4,7 @@ import { AddCity } from "components/AddCity";
 import Main from "components/Main";
 import { initApp } from "app/actions/initApp";
 import { connect } from "react-redux";
+import Toaster from "components/Toaster";
 
 interface Props {
   initApp: typeof initApp;
@@ -19,6 +20,7 @@ function App({ initApp }: Props) {
       <Header />
       <Main />
       <AddCity />
+      <Toaster />
     </div>
   );
 }

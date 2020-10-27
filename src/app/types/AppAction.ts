@@ -4,6 +4,7 @@ import { ApiActions } from "app/actions/api";
 import { CityActions } from "app/actions/cities";
 import { DummyAction } from "app/types/DummyAction";
 import { InitApp } from "app/actions/initApp";
+import { ToastActions } from "app/actions/toasts";
 
 export type ActionConstant = keyof typeof constants;
 
@@ -11,5 +12,6 @@ export type AppAction =
   | DummyAction
   | Multi
   | CityActions
+  | ToastActions
   | ApiActions
   | InitApp;

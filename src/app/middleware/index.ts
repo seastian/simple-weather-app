@@ -3,11 +3,13 @@ import { apiMdl } from "./core/api";
 import { multiMdl } from "./core/multi";
 import { updateWeatherMdl } from "./app/updateWeather";
 import { initAppMdl } from "./app/initApp";
+import { limitNumberOfCitiesMdl } from "./app/limitNumberOfCities";
 
 export const middleware = [
   multiMdl,
   apiMdl,
   initAppMdl,
+  limitNumberOfCitiesMdl,
   fetchWeatherMdl,
   updateWeatherMdl,
 ];
