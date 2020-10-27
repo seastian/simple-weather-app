@@ -13,10 +13,11 @@ import {
   setCityCurrentWeather,
 } from "app/actions/cities";
 import { Weather } from "app/types/Weather";
+import { getCityById } from "app/selectors/cities";
 
-export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
-  action
-) => {
+export const fetchWeatherMdl: Middleware = ({ dispatch, getState }) => (
+  next
+) => (action) => {
   next(action);
 
   if (action.type === ADD_CITY) {
@@ -49,6 +50,10 @@ export const fetchWeatherMdl: Middleware = ({ dispatch }) => (next) => (
     const forecast: Weather[] = data!.daily.map((f) => ({
       temperature: f.temp.day,
     }));
-    dispatch(setCityCurrentWeather(cityId, weather, forecast));
+
+    const cityExists = getCityById(getState(), cityId);
+    if (cityExists) {
+      dispatch(setCityCurrentWeather(cityId, weather, forecast));
+    }
   }
 };

@@ -1,4 +1,8 @@
-import { ADD_CITY, SET_CURRENT_WEATHER } from "app/constants/actions";
+import {
+  ADD_CITY,
+  DELETE_CITY,
+  SET_CURRENT_WEATHER,
+} from "app/constants/actions";
 import { AppAction } from "app/types/AppAction";
 import { City } from "app/types/City";
 
@@ -24,6 +28,13 @@ export const citiesReducer = (
         ...state,
         [cityId]: { ...state[cityId], currentWeather: weather, forecast },
       };
+    }
+
+    case DELETE_CITY: {
+      const cityId = action.cityId;
+      const newState = { ...state };
+      delete newState[cityId];
+      return newState;
     }
 
     default:

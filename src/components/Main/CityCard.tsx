@@ -12,6 +12,7 @@ import { City } from "app/types/City";
 import React from "react";
 import { connect } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { deleteCity } from "app/actions/cities";
 
 const useStyles = makeStyles((theme) => ({
   current: {
@@ -24,17 +25,20 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   id: string;
   city: City;
+  deleteCity: typeof deleteCity;
 }
 
-const CityCard = ({ city }: Props) => {
+const CityCard = ({ city, deleteCity }: Props) => {
   const classes = useStyles();
+
+  const handleDelete = () => deleteCity(city.id);
 
   return (
     <Card>
       <CardHeader
         title={city.name}
         action={
-          <IconButton aria-label="delete-city">
+          <IconButton aria-label="delete-city" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         }
@@ -66,4 +70,8 @@ const mapStateToProps = (state: AppState, { id }: { id: string }) => ({
   city: getCityById(state, id),
 });
 
-export default connect(mapStateToProps)(CityCard);
+const mapDispatchToProps = {
+  deleteCity,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityCard);
