@@ -1,3 +1,5 @@
+export const INIT_APP = "INIT_APP";
+
 // Multi Middleware
 export const MULTI = "MULTI";
 
