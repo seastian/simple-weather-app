@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Header from "components/Header";
-import { AddCity } from "components/AddCity";
+import AddCity from "components/AddCity";
 import Main from "components/Main";
 import { initApp } from "app/actions/initApp";
 import { connect } from "react-redux";

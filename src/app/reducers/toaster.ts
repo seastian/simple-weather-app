@@ -11,8 +11,14 @@ export const toasterReducer = (
   action: AppAction
 ): ToasterState => {
   switch (action.type) {
-    case CREATE_TOAST:
-      return [...state, action.toast];
+    case CREATE_TOAST: {
+      const toast = action.toast;
+      const lastMessage = state[state.length - 1]?.message;
+      if (lastMessage === toast.message) {
+        return state;
+      }
+      return [...state, toast];
+    }
 
     case DELETE_LAST_TOAST:
       return state.slice(1);

@@ -14,7 +14,7 @@ export const Main = ({ citiesIds }: Props) => {
     <Box m={4}>
       <Grid container spacing={2}>
         {citiesIds.map((cityId) => (
-          <Grid item key={cityId} xs={12} md={4}>
+          <Grid item key={cityId} xs={12} sm={6} md={4}>
             <CityCard id={cityId} />
           </Grid>
         ))}

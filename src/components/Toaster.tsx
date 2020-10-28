@@ -14,13 +14,10 @@ interface Props {
 const Toaster = ({ toast, deleteLastToast }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   useEffect(() => {
     if (toast !== null) {
       setIsOpen(true);
+      setTimeout(() => setIsOpen(false), toast.timeout);
     } else {
       setIsOpen(false);
     }
@@ -30,9 +27,7 @@ const Toaster = ({ toast, deleteLastToast }: Props) => {
     <Snackbar
       message={toast?.message}
       open={isOpen}
-      onClose={handleClose}
       anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-      autoHideDuration={toast?.timeout}
       onExited={() => deleteLastToast()}
     />
   );

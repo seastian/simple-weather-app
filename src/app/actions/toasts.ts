@@ -6,7 +6,7 @@ interface CreateToast {
   toast: Toast;
 }
 
-export const createToast = (message: string, timeout = 2000): CreateToast => ({
+export const createToast = (message: string, timeout = 3000): CreateToast => ({
   type: CREATE_TOAST,
   toast: { message, timeout },
 });

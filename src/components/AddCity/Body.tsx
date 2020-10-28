@@ -10,6 +10,8 @@ import { CityDto, fetchDependencies } from "./fetchDependencies";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 import { addCity } from "app/actions/cities";
+import { addCityWindowClose } from "app/actions/ui";
+
 const useStyles = makeStyles(() => ({
   root: {
     height: "60vh",
@@ -18,9 +20,10 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
   addCity: typeof addCity;
+  addCityWindowClose: typeof addCityWindowClose;
 }
 
-const Body = ({ addCity }: Props) => {
+const Body = ({ addCity, addCityWindowClose }: Props) => {
   const classes = useStyles();
   const [search, setSearch] = useState("");
 
@@ -51,6 +54,7 @@ const Body = ({ addCity }: Props) => {
   const handleAdd = (id: number) => () => {
     const city = cities[id];
     addCity(city.name, city.lat, city.lng);
+    addCityWindowClose();
   };
 
   return (
@@ -86,6 +90,7 @@ const Body = ({ addCity }: Props) => {
 
 const mapDisptachToProps = {
   addCity,
+  addCityWindowClose,
 };
 
 export default connect(undefined, mapDisptachToProps)(Body);

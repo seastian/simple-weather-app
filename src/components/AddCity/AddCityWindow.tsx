@@ -1,7 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   IconButton,
   Typography,
@@ -12,6 +11,11 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import Body from "./Body";
+import { AppState } from "app/types/AppState";
+import { addCityWindowClose } from "app/actions/ui";
+import { connect } from "react-redux";
+import { getIsAddCityWindowOpen } from "app/selectors/ui";
 
 interface Props {
   title: string;
@@ -34,12 +38,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const AddCityWindow: FC<Props> = ({
-  title,
-  open,
-  onClose,
-  children,
-}) => {
+const AddCityWindow = ({ title, open, onClose }: Props) => {
   const classes = useStyles();
   const isMobile = useMediaQuery("(max-width: 769px)");
 
@@ -66,7 +65,19 @@ export const AddCityWindow: FC<Props> = ({
           </Typography>
         </Toolbar>
       </AppBar>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent>
+        <Body />
+      </DialogContent>
     </Dialog>
   );
 };
+
+const mapStateToProps = (state: AppState) => ({
+  open: getIsAddCityWindowOpen(state),
+});
+
+const mapDispatchToProps = {
+  onClose: addCityWindowClose,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCityWindow);

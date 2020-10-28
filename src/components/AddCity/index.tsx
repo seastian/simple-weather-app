@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { AddCityWindow } from "./AddCityWindow";
-import Body from "./Body";
+import React from "react";
+import AddCityWindow from "./AddCityWindow";
 import { Fab, makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import { addCityWindowOpen } from "app/actions/ui";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -12,31 +13,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const AddCity = () => {
+interface Props {
+  openAddCityWindow: typeof addCityWindowOpen;
+}
+
+const AddCity = ({ openAddCityWindow }: Props) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <>
       <Fab
-        onClick={handleOpen}
+        onClick={openAddCityWindow}
         color="primary"
         aria-label="add"
         className={classes.button}
       >
         <AddIcon />
       </Fab>
-      <AddCityWindow title="Choose city" open={open} onClose={handleClose}>
-        <Body />
-      </AddCityWindow>
+      <AddCityWindow title="Choose city" />
     </>
   );
 };
+
+const mapDispatchToProps = {
+  openAddCityWindow: addCityWindowOpen,
+};
+
+export default connect(undefined, mapDispatchToProps)(AddCity);
