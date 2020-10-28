@@ -10,9 +10,9 @@ A simple React - Redux - Typescript weather application.
 
 ## Demo
 
-[](docs/simple-weather.gif)
+![](docs/simple-weather.gif)
 
 Open redux console to monitor events!
 
-[](docs/simple-weather-redux.gif)
+![](docs/simple-weather-redux.gif)
 
